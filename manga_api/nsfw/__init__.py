@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from nhentai import nhentai_endpoint
+from .nhentai import nhentai_endpoint
 
 nsfw = Blueprint('nsfw', __name__)
 

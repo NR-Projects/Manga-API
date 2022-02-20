@@ -1,7 +1,7 @@
 from flask import Blueprint
 
-from mangakakalot import mangakakalot_endpoint
-from manganelo import manganelo_endpoint
+from .mangakakalot import mangakakalot_endpoint
+from .manganelo import manganelo_endpoint
 
 sfw = Blueprint('sfw', __name__)
 
