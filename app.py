@@ -1,11 +1,10 @@
 from flask import Flask
 
-from .manga_api.sfw import *
-from .manga_api.nsfw import *
+from manga_api.sfw import sfw
+from manga_api.nsfw import nsfw
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = ''
 
     app.register_blueprint(sfw, url_prefix='/sfw')
     app.register_blueprint(nsfw, url_prefix='/nsfw')
