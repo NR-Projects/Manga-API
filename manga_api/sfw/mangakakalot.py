@@ -66,6 +66,6 @@ class Mangakakalot():
 def index():
     RawMangaLink = request.args.get('MangaLink', type=str)
 
-    MangaData = Mangakakalot(RawMangaLink)
+    MangaData = Mangakakalot(RawMangaLink).GetData()
 
     return jsonify(MangaData=MangaData), 200
