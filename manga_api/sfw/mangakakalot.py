@@ -1,15 +1,15 @@
 from bs4 import BeautifulSoup
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from ..consts import *
 
 import requests
 
-mangakakalot_endpoint = Blueprint('sfw', __name__)
+mangakakalot_endpoint = Blueprint('mangakakalot', __name__)
 
 class Mangakakalot():
-    def __init__(self, Response, Url):
-        self.Response = Response
+    def __init__(self, Url):
         self.Url = Url
+        self.Response = requests.get(self.Url, headers=Site.HEADERS)
     
     def GetData(self) -> dict:
         MangaData = {}
@@ -64,6 +64,8 @@ class Mangakakalot():
 
 @mangakakalot_endpoint.route('/', methods = ['GET'])
 def index():
-    RawMangaLink = request.args.get('MangaLink')
-    IncludeMangaDetails = request.args.get('IncludeMangaDetails')
-    ExcludeMangaDetails = request.args.get('ExcludeMangaDetails')
+    RawMangaLink = request.args.get('MangaLink', type=str)
+
+    MangaData = Mangakakalot(RawMangaLink)
+
+    return jsonify(MangaData=MangaData), 200
