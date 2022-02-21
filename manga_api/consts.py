@@ -13,8 +13,6 @@ class Label:
 
     class NSFW:
         MANGA_PAGES = "Manga_Pages"
-        MANGA_PAGE_LINKS = "Manga_Page_Links"
-        MANGA_UPLOADED = "Manga_Uploaded"
 
 class Site:
     HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"}
