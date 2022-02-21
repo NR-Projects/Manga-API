@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from flask import Blueprint, request, jsonify
 from ..consts import *
+from ..classes import *
 
 import requests
 
@@ -66,6 +67,9 @@ class Mangakakalot():
 def index():
     RawMangaLink = request.args.get('MangaLink', type=str)
 
+    if RawMangaLink is None:
+        return jsonify(Response=Response('failed', 'missing "/MangaLink"/ parameter', {}).GetData()), 400
+
     MangaData = Mangakakalot(RawMangaLink).GetData()
 
-    return jsonify(MangaData=MangaData), 200
+    return jsonify(Response=Response('success', '', MangaData).GetData()), 200
