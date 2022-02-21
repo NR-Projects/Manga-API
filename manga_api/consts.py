@@ -3,10 +3,10 @@ class Label:
     MANGA_NAME = "Manga_Name"
     MANGA_AUTHORS = "Manga_Authors"
     MANGA_GENRES = "Manga_Genres"
+    MANGA_PIC_LINK = "Manga_Pic_Link"
 
     class SFW:
         MANGA_DESC = "Manga_Desc"
-        MANGA_PIC_LINK = "Manga_Pic_Link"
         MANGA_LAST_UPDATED = "Manga_Last_Updated"
         MANGA_TOTAL_CHAPTER_COUNT = "Manga_Total_Chapter_Count"
         MANGA_LATEST_CHAPTER_NAME = "Manga_Latest_Chapter_Name"

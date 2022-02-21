@@ -47,7 +47,7 @@ class Readmanganato():
 
         # Get Pic Link
         Pic_Link = full_manga_content.find("div", {"class":"story-info-left"}).find("span", {"class":"info-image"}).find("img")["src"]
-        MangaData[Label.SFW.MANGA_PIC_LINK] = Pic_Link
+        MangaData[Label.MANGA_PIC_LINK] = Pic_Link
 
         # Get Desc
         Desc = "".join(full_manga_content.find("div", {"class": "panel-story-info-description"}).findAll(text=True, recursive=False)).strip()

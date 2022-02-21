@@ -47,7 +47,7 @@ class Mangakakalot():
 
         # Get Pic Link
         PicLink = full_manga_content.find("div", {"class": "manga-info-pic"}).find("img")["src"]
-        MangaData[Label.SFW.MANGA_PIC_LINK] = PicLink
+        MangaData[Label.MANGA_PIC_LINK] = PicLink
 
         # Get Desc
         Desc = "".join(full_manga_content.find("div", {"id": "noidungm"}).findAll(text=True, recursive=False)).strip()
