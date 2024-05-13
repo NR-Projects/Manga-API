@@ -1,24 +1,18 @@
 from bs4 import BeautifulSoup
-from flask import Blueprint, request, jsonify
+from manga_api.manga_interface import MangaInterface
 from ..consts import *
-from ..classes import *
+from ..response import *
 
-import requests
 
-nhentai_endpoint = Blueprint('nhentai', __name__)
-
-class NHentai():
-    def __init__(self, Url):
-        self.Url = Url
+class NHentai(MangaInterface):
+    def __init__(self, URL):
+        super().__init__(URL)
     
     def GetData(self) -> dict:
         MangaData = {}
 
         try:
-            # Fetch Data from URL
-            self.Response = requests.get(self.Url)
-
-            MangaData[Label.MANGA_LINK] = self.Url
+            MangaData[Label.MANGA_LINK] = self.URL
 
             full_manga_content = BeautifulSoup(self.Response.content, 'html.parser')
 
@@ -63,16 +57,3 @@ class NHentai():
 
         return MangaData
 
-@nhentai_endpoint.route('/', methods=['GET'])
-def index():
-    RawMangaLink = request.args.get('MangaLink', type=str)
-
-    if RawMangaLink is None:
-        return jsonify(Response=Response('failed', 'missing "/MangaLink"/ parameter', {}).GetData()), 400
-
-    MangaData = NHentai(RawMangaLink).GetData()
-
-    if MangaData is None:
-        return jsonify(Response=Response('failed', 'invalid "/MangaLink"/ parameter', {}).GetData()), 400
-
-    return jsonify(Response=Response('success', '', MangaData).GetData()), 200

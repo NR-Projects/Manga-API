@@ -1,28 +1,21 @@
 from bs4 import BeautifulSoup
-from flask import Blueprint, request, jsonify
-from ..consts import *
-from ..classes import *
+from manga_api.manga_interface import MangaInterface
+from manga_api.consts import *
+from manga_api.response import *
 
-import requests
 
-mangakakalot_endpoint = Blueprint('mangakakalot', __name__)
-
-class Mangakakalot():
-    def __init__(self, Url):
-        self.Url = Url
+class Mangakakalot(MangaInterface):
+    def __init__(self, URL):
+        super().__init__(URL)
         
-    
     def GetData(self) -> dict:
         MangaData = {}
 
         try:
-            # Fetch Data from URL
-            self.Response = requests.get(self.Url, headers=Site.HEADERS)
-
             # Set Manga Link
-            MangaData[Label.MANGA_LINK] = self.Url
+            MangaData[Label.MANGA_LINK] = self.URL
 
-            full_manga_content = BeautifulSoup(self.Response.content, 'html.parser')
+            full_manga_content = BeautifulSoup(self.Response, 'html.parser')
 
             Infos = full_manga_content.find("ul", {"class":"manga-info-text"}).find_all("li")
             Chapters_Container = full_manga_content.find("div", {"class": "chapter-list"})
@@ -68,17 +61,3 @@ class Mangakakalot():
             return None
 
         return MangaData
-
-@mangakakalot_endpoint.route('/', methods = ['GET'])
-def index():
-    RawMangaLink = request.args.get('MangaLink', type=str)
-
-    if RawMangaLink is None:
-        return jsonify(Response=Response('failed', 'missing "/MangaLink"/ parameter', {}).GetData()), 400
-
-    MangaData = Mangakakalot(RawMangaLink).GetData()
-
-    if MangaData is None:
-        return jsonify(Response=Response('failed', 'invalid "/MangaLink"/ parameter', {}).GetData()), 400
-
-    return jsonify(Response=Response('success', '', MangaData).GetData()), 200
